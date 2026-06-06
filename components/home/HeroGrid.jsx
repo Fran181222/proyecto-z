@@ -64,14 +64,14 @@ export default function HeroGrid() {
           {/* Panel izquierdo — Oferta */}
           <article className="hero-panel hero-offer">
             <img
-              src="/img/display-shiny-luxurious-golden-chain.jpg"
-              alt="Oferta destacada Malibu"
+              src="/img/imagen-titulo.png"
+              alt="Oferta destacada"
             />
             <div className="hero-offer-content">
-              <div className="offer-badge">Oferta Malibu Week</div>
+              <div className="offer-badge">Oferta Malibu</div>
               <div className="hero-offer-copy">
                 <p className="section-tag mb-3">Hasta 35% OFF en sets seleccionados</p>
-                <h1>Brillo dorado para una temporada inolvidable.</h1>
+                <h1>Todo para ustedes</h1>
                 <p className="lead mb-4">
                   Cápsulas exclusivas con acabado premium, packaging regalo y cuotas sin interés.
                 </p>
@@ -102,7 +102,7 @@ export default function HeroGrid() {
                   <i className="bi bi-fire"></i> Más vendidos
                 </p>
                 <div className="rotating-wrapper">
-                  <span>Descubre </span>
+                  <span></span>
                   <strong
                     className="rotating-text"
                     style={{

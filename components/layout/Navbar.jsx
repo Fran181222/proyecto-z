@@ -22,7 +22,7 @@ export default function Navbar() {
         <Link className="navbar-brand" href="/">
           <span className="brand-logo" aria-hidden="true">
             <span className="brand-logo-word">MAL</span>
-            <span className="brand-logo-dot"></span>
+            {/* <span className="brand-logo-dot"></span> */}
             <span className="brand-logo-word">IBU</span>
           </span>
           <span className="visually-hidden">Malibu</span>
@@ -57,28 +57,27 @@ export default function Navbar() {
                 <div className="row g-4">
                   <div className="col-lg-3">
                     <div className="mega-card">
-                      <span className="mini-label">Tendencias Malibu</span>
-                      <h5 className="mt-3">
-                        Piezas para días de playa, eventos y noche.
-                      </h5>
-                      <p className="mb-0 text-secondary">
-                        Explora anillos, aros, collares y sets con curaduría premium.
-                      </p>
+                      <div className="col-lg-3 mega-links">
+                      <span className="mini-label">Tendencias</span>
+                      <Link href="/productos?coleccion=italianas">Italianas</Link>
+                      <Link href="/productos?coleccion=accesorios">Charms</Link>
+                      <Link href="/productos?coleccion=materiales">Herramientas</Link>
+                      </div>
                     </div>
                   </div>
                   <div className="col-lg-3 mega-links">
-                    <h6 className="fw-bold mb-3">Por estilo</h6>
-                    <Link href="/productos?coleccion=italianas">Italianas</Link>
-                    <Link href="/productos?coleccion=accesorios">Accesorios</Link>
-                    <Link href="/productos?coleccion=materiales">Materiales</Link>
+                    <h6 className="fw-bold mb-3">Accesorios</h6>
+                    <Link href="/productos?coleccion=italianas">Pulseras</Link>
+                    <Link href="/productos?coleccion=accesorios">Collares</Link>
+                    <Link href="/productos?coleccion=materiales">Bufandones</Link>
                     <Link href="/sets">Sets</Link>
                   </div>
                   <div className="col-lg-3 mega-links">
-                    <h6 className="fw-bold mb-3">Por ocasión</h6>
+                    <h6 className="fw-bold mb-3">Materiales</h6>
+                    <Link href="/productos?categoria=regalos">Oro</Link>
+                    <Link href="/productos?categoria=uso-diario">Plata</Link>
+                    <Link href="/productos?categoria=edicion-limitada">Rose Gold</Link>
                     <Link href="/gift-card">Gift Cards</Link>
-                    <Link href="/productos?categoria=regalos">Regalos</Link>
-                    <Link href="/productos?categoria=uso-diario">Uso diario</Link>
-                    <Link href="/productos?categoria=edicion-limitada">Edición limitada</Link>
                   </div>
                   <div className="col-lg-3">
                     <img

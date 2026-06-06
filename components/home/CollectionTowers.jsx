@@ -50,7 +50,7 @@ export default function CollectionTowers() {
                       position: "absolute",
                       inset: 0,
                       background:
-                        "linear-gradient(to top, rgba(16,43,31,0.85) 0%, transparent 55%)",
+                        "linear-gradient(to top, #350f16 0%, transparent 55%",
                     }}
                   />
 

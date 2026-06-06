@@ -17,6 +17,9 @@ export default function Home() {
 
       {/* Piezas destacadas */}
       <JewelCards />
+      
+      {/* Carrusel de sets */}
+      <SetsCarousel />
 
       {/* 3 Torres de colecciones — Punto 6 */}
       <CollectionTowers />
@@ -24,8 +27,6 @@ export default function Home() {
       {/* Tendencias con imágenes — Punto 9 */}
       <TrendingSection />
 
-      {/* Carrusel de sets */}
-      <SetsCarousel />
     </main>
   );
 }

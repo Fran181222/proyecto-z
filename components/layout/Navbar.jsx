@@ -7,7 +7,7 @@ import { useCart } from "@/context/CartContext";
 export default function Navbar() {
   const pathname = usePathname();
   const { openModal, user, logout } = useAuth();
-  const { itemCount, setIsOpen } = useCart();
+  const { itemCount, setIsOpen, isHydrated } = useCart(); // ← Ahora recibe isHydrated
 
   const navLinks = [
     { href: "/productos", label: "Productos", page: "productos" },
@@ -151,7 +151,7 @@ export default function Navbar() {
               aria-label="Abrir carrito"
             >
               <i className="fa-solid fa-bag-shopping"></i>
-              {itemCount > 0 && (
+              {isHydrated && itemCount > 0 && (
                 <span className="cart-count-badge">{itemCount}</span>
               )}
             </button>

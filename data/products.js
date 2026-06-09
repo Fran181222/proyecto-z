@@ -1,7 +1,18 @@
+/**
+ * Referencia temporal del catálogo de Malibu.
+ *
+ * Estructura de un producto válido:
+ * - Obligatorios: `id`, `name`, `price`, `images`, `category`, `collection`, `subcollection`, `plan`, `stock`, `desc`, `tags`, `filters`, `reviews`, `relatedIds`.
+ * - Opcionales: `pricesBySize`, `reviews`, `relatedIds`.
+ * - `pricesBySize` es un objeto donde cada key representa una talla y cada value es el precio para esa talla.
+ *
+ * Este archivo todavía funciona como fuente de verdad temporal.
+ * A futuro, estos datos vendrán desde una base de datos y las funciones de consulta se moverán a una capa de servicios.
+ */
 export const products = [
   {
     id: "aros-corazon-celeste",
-    name: "Aros Corazón Celeste",
+    name: "Aros Corazon Celeste",
     category: "Aros",
     collection: "accesorios",
     subcollection: "Aros",
@@ -19,12 +30,12 @@ export const products = [
       { src: "/img/aros-corazon-celeste(2).jpg", alt: "Detalle lateral" },
       { src: "/img/aros-corazon-celeste(3).jpg", alt: "Detalle textura" },
     ],
-    desc: "Aros con forma de corazón en tono celeste, ideales para uso diario.",
+    desc: "Aros con forma de corazÃ³n en tono celeste, ideales para uso diario.",
     tags: ["dorado", "aros"],
     filters: { color: "Dorado", categoria: "Para compartir" },
     reviews: [
       { id: 1, name: "Laura M.", rating: 5, comment: "Hermosos, llegaron perfectos!", date: "2025-05-10" },
-      { id: 2, name: "Sofía R.", rating: 4, comment: "Muy buena calidad, los uso todos los días.", date: "2025-04-28" },
+      { id: 2, name: "SofÃ­a R.", rating: 4, comment: "Muy buena calidad, los uso todos los dÃ­as.", date: "2025-04-28" },
     ],
     relatedIds: ["collar-sunset-layers", "pulsera-coastline"],
   },
@@ -41,7 +52,7 @@ export const products = [
     images: [
       { src: "/img/display-shiny-elegant-gold-chain.jpg", alt: "Collar Sunset Layers" },
     ],
-    desc: "Capas finas con caída fluida y detalles pulidos.",
+    desc: "Capas finas con caÃ­da fluida y detalles pulidos.",
     tags: ["dorado", "collares"],
     filters: { color: "Dorado", categoria: "Para compartir" },
     reviews: [],
@@ -65,7 +76,7 @@ export const products = [
     images: [
       { src: "/img/expensive-golden-ring-displayed-white-coral-background.jpg", alt: "Anillo Coral Glow" },
     ],
-    desc: "Volumen escultórico con piedra coral protagonista.",
+    desc: "Volumen escultÃ³rico con piedra coral protagonista.",
     tags: ["dorado", "anillos"],
     filters: { color: "Dorado", categoria: "De viajes" },
     reviews: [],
@@ -108,90 +119,61 @@ export const products = [
     images: [
       { src: "/img/imagen-titulo.png", alt: "Imagen" },
     ],
-    desc: "Diseño versátil para layering sofisticado con textura de alto brillo.",
+    desc: "DiseÃ±o versÃ¡til para layering sofisticado con textura de alto brillo.",
     tags: ["dorado", "collares"],
     filters: { color: "Dorado", categoria: "Para compartir" },
     reviews: [],
     relatedIds: ["collar-sunset-layers", "pulsera-coastline"],
   },
-  {
-    id: "example-1",
-    name: "Cadena Pacific Glow",
-    category: "Collares",
-    collection: "italianas",
-    subcollection: "Collares",
-    plan: "Plan Oro",
-    price: 75000,
-    pricesBySize: null,
-    stock: 6,
-    images: [
-      { src: "/img/imagen-titulo.png", alt: "Cadena Pacific Glow" },
-    ],
-    desc: "Diseño versátil para layering sofisticado con textura de alto brillo.",
-    tags: ["dorado", "collares"],
-    filters: { color: "Dorado", categoria: "Para compartir" },
-    reviews: [],
-    relatedIds: ["collar-sunset-layers", "pulsera-coastline"],
-  },
-  {
-    id: "example-2",
-    name: "Cadena Pacific Glow",
-    category: "Collares",
-    collection: "italianas",
-    subcollection: "Collares",
-    plan: "Plan Oro",
-    price: 75000,
-    pricesBySize: null,
-    stock: 6,
-    images: [
-      { src: "/img/imagen-titulo.png", alt: "Cadena Pacific Glow" },
-    ],
-    desc: "Diseño versátil para layering sofisticado con textura de alto brillo.",
-    tags: ["dorado", "collares"],
-    filters: { color: "Dorado", categoria: "Para compartir" },
-    reviews: [],
-    relatedIds: ["collar-sunset-layers", "pulsera-coastline"],
-  },
-  {
-    id: "example-3",
-    name: "Cadena Pacific Glow",
-    category: "Collares",
-    collection: "italianas",
-    subcollection: "Collares",
-    plan: "Plan Oro",
-    price: 75000,
-    pricesBySize: null,
-    stock: 6,
-    images: [
-      { src: "/img/imagen-titulo.png", alt: "Cadena Pacific Glow" },
-    ],
-    desc: "Diseño versátil para layering sofisticado con textura de alto brillo.",
-    tags: ["dorado", "collares"],
-    filters: { color: "Dorado", categoria: "Para compartir" },
-    reviews: [],
-    relatedIds: ["collar-sunset-layers", "pulsera-coastline"],
-  },
-  {
-    id: "example-4",
-    name: "Cadena Pacific Glow",
-    category: "Collares",
-    collection: "italianas",
-    subcollection: "Collares",
-    plan: "Plan Oro",
-    price: 75000,
-    pricesBySize: null,
-    stock: 6,
-    images: [
-      { src: "/img/imagen-titulo.png", alt: "Cadena Pacific Glow" },
-    ],
-    desc: "Diseño versátil para layering sofisticado con textura de alto brillo.",
-    tags: ["dorado", "collares"],
-    filters: { color: "Dorado", categoria: "Para compartir" },
-    reviews: [],
-    relatedIds: ["collar-sunset-layers", "pulsera-coastline"],
-  },
-
 ];
+
+/**
+ * Filtra productos por colección.
+ *
+ * Patrón base para nuevos filtros:
+ * export function getProductsByXXX(valueToFilter) {
+ *   return products.filter((p) => p.fieldName === valueToFilter);
+ * }
+ *
+ * Internamente usa `filter()` para recorrer `products` y quedarse solo con
+ * los productos donde `p.collection === collectionId`.
+ *
+ * Si querés agregar otro filtro por collection, este es el lugar para hacerlo:
+ * reemplazá o ampliá la condición dentro del `filter()` sin tocar el resto del archivo.
+ *
+ * Ejemplo de uso:
+ * `const italianas = getProductsByCollection("italianas");`
+ *
+ * @param {string} collectionId - Identificador de la colección a buscar.
+ * @returns {Array<Object>} Lista de productos que pertenecen a esa colección.
+ */
+export function getProductsByCollection(collectionId) {
+  return products.filter((p) => p.collection === collectionId);
+}
+
+/**
+ * Filtra productos por categoría.
+ *
+ * Patrón base para nuevos filtros:
+ * export function getProductsByXXX(valueToFilter) {
+ *   return products.filter((p) => p.fieldName === valueToFilter);
+ * }
+ *
+ * Internamente usa `filter()` para recorrer `products` y quedarse solo con
+ * los productos donde `p.category === category`.
+ *
+ * Si querés agregar un nuevo filtro por category o por otro campo, este es el lugar para hacerlo:
+ * modificá la condición dentro del `filter()` o copiá este patrón para crear otra función.
+ *
+ * Ejemplo de uso:
+ * `const collares = getProductsByCategory("Collares");`
+ *
+ * @param {string} category - Categoría a filtrar.
+ * @returns {Array<Object>} Lista de productos que coinciden con la categoría indicada.
+ */
+export function getProductsByCategory(category) {
+  return products.filter((p) => p.category === category);
+}
 
 export const collections = [
   {

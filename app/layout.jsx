@@ -9,6 +9,7 @@ import Topbar from "@/components/layout/Topbar";
 import CartDrawer from "@/components/ui/CartDrawer";
 import AuthModal from "@/components/ui/AuthModal";
 import WelcomePopup from "@/components/ui/WelcomePopup";
+import FloatingContactButton from "@/components/ui/FloatingContactButton";
 
 export const metadata = {
   title: "Malibu Joyería",
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
             <Navbar />
             {children}
             <Footer />
+            <FloatingContactButton />
             <CartDrawer />
             <AuthModal />
           </CartProvider>

@@ -2740,6 +2740,194 @@ img {
   font-size: 0.88rem;
   color: var(--muted);
 }
+
+@keyframes pulse-once {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(var(--floating-distance)) scale(0.68);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(var(--floating-distance)) scale(0.68);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.floating-contact {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 1200;
+  width: 60px;
+  height: 60px;
+  --floating-step: 72px;
+}
+
+.floating-contact__menu {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 80px;
+  pointer-events: none;
+}
+
+.floating-contact__item,
+.floating-contact__trigger {
+  border: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #4d0011;
+  color: #ecd7d8;
+  box-shadow:
+    0 18px 34px rgba(77, 0, 17, 0.24),
+    0 0 0 1px rgba(236, 215, 216, 0.1);
+}
+
+.floating-contact__item {
+  width: 50px;
+  height: 50px;
+  font-size: 1.35rem;
+  opacity: 0;
+  transform: translateY(var(--floating-distance)) scale(0.68);
+  filter: brightness(1);
+  z-index: 1;
+  transition:
+    opacity 300ms ease-in-out,
+    transform 300ms ease-in-out,
+    filter 220ms ease-in-out,
+    scale 160ms ease-in-out,
+    background-color 220ms ease-in-out;
+}
+
+.floating-contact__item:hover,
+.floating-contact__item:focus-visible,
+.floating-contact__trigger:hover,
+.floating-contact__trigger:focus-visible {
+  filter: brightness(1.16);
+  color: #fff4f4;
+}
+
+.floating-contact__menu.is-open {
+  pointer-events: auto;
+}
+
+.floating-contact__menu.is-open .floating-contact__item {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  /* El delay por indice crea la subida escalonada sin cambiar la logica del componente. */
+  animation:
+    slideUp 300ms ease-in-out both,
+    fadeIn 300ms ease-in-out both;
+  animation-delay: calc(var(--floating-index) * 45ms);
+}
+
+.floating-contact__menu.is-closing .floating-contact__item {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: slideDown 300ms ease-in-out both;
+  animation-delay: calc((2 - var(--floating-index)) * 35ms);
+}
+
+.floating-contact__menu.is-closed .floating-contact__item {
+  opacity: 0;
+  transform: translateY(var(--floating-distance)) scale(0.68);
+}
+
+.floating-contact__trigger {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  z-index: 2;
+  transition:
+    transform 300ms ease-in-out,
+    filter 220ms ease-in-out,
+    scale 160ms ease-in-out,
+    background-color 220ms ease-in-out;
+}
+
+.floating-contact__trigger.is-open {
+  transform: rotate(45deg);
+}
+
+.floating-contact__trigger.is-pulsing {
+  animation: pulse-once 600ms ease-in-out 3;
+}
+
+.floating-contact__plus {
+  font-size: 2.15rem;
+  line-height: 1;
+  font-weight: 300;
+  transition: transform 300ms ease-in-out;
+}
+
+.floating-contact__item:active,
+.floating-contact__trigger:active {
+  scale: 0.92;
+}
+
+@media (max-width: 767.98px) {
+  .floating-contact {
+    right: 1rem;
+    bottom: 1rem;
+    width: 50px;
+    height: 50px;
+    --floating-step: 60px;
+  }
+
+  .floating-contact__menu {
+    gap: 0.95rem;
+    padding-bottom: 65px;
+  }
+
+  .floating-contact__trigger {
+    width: 50px;
+    height: 50px;
+  }
+
+  .floating-contact__item {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  .floating-contact__plus {
+    font-size: 1.95rem;
+  }
+}
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1600px;

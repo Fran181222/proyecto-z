@@ -3,17 +3,17 @@ import Link from "next/link";
 const SOCIAL_LINKS = [
   {
     name: "Instagram",
-    href: "https://www.instagram.com/TU_USUARIO",
+    href: "https://www.instagram.com/malibu.juy/",
     icon: "fa-brands fa-instagram",
   },
   {
     name: "TikTok",
-    href: "https://www.tiktok.com/@TU_USUARIO",
+    href: "https://www.tiktok.com/@malibu.juy",
     icon: "fa-brands fa-tiktok",
   },
   {
     name: "WhatsApp",
-    href: "https://wa.me/5491155552026",
+    href: "https://wa.me/+5493885088917",
     icon: "fa-brands fa-whatsapp",
   },
 ];

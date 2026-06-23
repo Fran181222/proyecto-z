@@ -8,7 +8,7 @@ export default function Topbar() {
         </span>
         <span>
           <i className="bi bi-telephone me-2"></i>
-          Asesoría personalizada: +54 9 388 #######
+          Asesoría personalizada: +54 9 388 508-8917
         </span>
       </div>
     </div>

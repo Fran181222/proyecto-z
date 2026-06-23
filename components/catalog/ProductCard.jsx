@@ -9,7 +9,9 @@ export default function ProductCard({ product }) {
   return (
     <article className="jewel-card">
       <div className="jewel-media">
+        <Link href={`/productos/${product.id}`}>
         <img src={product.images[0].src} alt={product.name} />
+        </Link>
         <button
           className="card-cart-btn"
           onClick={() => addItem(product)}

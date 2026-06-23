@@ -1,4 +1,4 @@
-import ProductCard from "@/components/catalog/ProductCard";
+import ProductCatalog from "@/components/catalog/ProductCatalog";
 import { products } from "@/data/products";
 
 export const metadata = {
@@ -15,13 +15,7 @@ export default function ProductsPage() {
             <i className="fa-regular fa-gem me-2"></i>Catalogo
           </p>
           <h1 className="section-title">Productos</h1>
-          <div className="row g-4 mt-2">
-            {products.map((product) => (
-              <div className="col-12 col-sm-6 col-lg-4" key={product.id}>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
+          <ProductCatalog products={products} />
         </div>
       </section>
     </main>

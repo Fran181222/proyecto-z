@@ -30,12 +30,12 @@ export const products = [
       { src: "/img/aros-corazon-celeste(2).jpg", alt: "Detalle lateral" },
       { src: "/img/aros-corazon-celeste(3).jpg", alt: "Detalle textura" },
     ],
-    desc: "Aros con forma de corazÃ³n en tono celeste, ideales para uso diario.",
+    desc: "Aros con forma de corazón en tono celeste, ideales para uso diario.",
     tags: ["dorado", "aros"],
     filters: { color: "Dorado", categoria: "Para compartir" },
     reviews: [
       { id: 1, name: "Laura M.", rating: 5, comment: "Hermosos, llegaron perfectos!", date: "2025-05-10" },
-      { id: 2, name: "SofÃ­a R.", rating: 4, comment: "Muy buena calidad, los uso todos los dÃ­as.", date: "2025-04-28" },
+      { id: 2, name: "Sofí­a R.", rating: 4, comment: "Muy buena calidad, los uso todos los días.", date: "2025-04-28" },
     ],
     relatedIds: ["collar-sunset-layers", "pulsera-coastline"],
   },
@@ -52,7 +52,7 @@ export const products = [
     images: [
       { src: "/img/display-shiny-elegant-gold-chain.jpg", alt: "Collar Sunset Layers" },
     ],
-    desc: "Capas finas con caÃ­da fluida y detalles pulidos.",
+    desc: "Capas finas con caí­da fluida y detalles pulidos.",
     tags: ["dorado", "collares"],
     filters: { color: "Dorado", categoria: "Para compartir" },
     reviews: [],
@@ -76,7 +76,7 @@ export const products = [
     images: [
       { src: "/img/expensive-golden-ring-displayed-white-coral-background.jpg", alt: "Anillo Coral Glow" },
     ],
-    desc: "Volumen escultÃ³rico con piedra coral protagonista.",
+    desc: "Volumen escultúrico con piedra coral protagonista.",
     tags: ["dorado", "anillos"],
     filters: { color: "Dorado", categoria: "De viajes" },
     reviews: [],
@@ -119,7 +119,7 @@ export const products = [
     images: [
       { src: "/img/imagen-titulo.png", alt: "Imagen" },
     ],
-    desc: "DiseÃ±o versÃ¡til para layering sofisticado con textura de alto brillo.",
+    desc: "Diseño versátil para layering sofisticado con textura de alto brillo.",
     tags: ["dorado", "collares"],
     filters: { color: "Dorado", categoria: "Para compartir" },
     reviews: [],

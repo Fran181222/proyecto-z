@@ -17,11 +17,11 @@ function StarRating({ rating, interactive = false, onSelect }) {
             border: "none",
             cursor: interactive ? "pointer" : "default",
             padding: 0,
-            fontSize: "1.1rem",
+            fontSize: "1.7rem",
             color:
               star <= (interactive ? hovered || rating : rating)
-                ? "var(--gold)"
-                : "var(--border)",
+                ? "var(--yellow)"
+                : "var(--muted)",
             transition: "color 0.15s ease",
           }}
           aria-label={`${star} estrella${star > 1 ? "s" : ""}`}

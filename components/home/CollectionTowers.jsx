@@ -77,6 +77,7 @@ export default function CollectionTowers() {
                   <div
                     style={{
                       position: "absolute",
+                      textAlign: "center",
                       bottom: 0,
                       left: 0,
                       right: 0,
@@ -86,9 +87,9 @@ export default function CollectionTowers() {
                   >
                     <h3
                       style={{
-                        fontFamily: "Cormorant Garamond, serif",
-                        fontSize: "1.75rem",
-                        marginBottom: "0.35rem",
+                        fontFamily: "Poppins",
+                        fontSize: "2.75rem",
+                        marginBottom: "1.35rem",
                       }}
                     >
                       {col.name}

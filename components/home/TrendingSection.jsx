@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { Diamond, Flame, Sparkles, Star } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
 const TRENDING = [
@@ -8,7 +9,8 @@ const TRENDING = [
     name: "Bufandón Premium",
     category: "Bufandones",
     price: 38500,
-    badge: "🔥 Tendencia",
+    badge: "Tendencia",
+    BadgeIcon: Flame,
     image: "/img/display-shiny-luxurious-golden-chain.jpg",
     href: "/productos?coleccion=accesorios",
   },
@@ -17,7 +19,8 @@ const TRENDING = [
     name: "Collar Sunset Layers",
     category: "Collares",
     price: 84900,
-    badge: "⭐ Más vendido",
+    badge: "Mas vendido",
+    BadgeIcon: Star,
     image: "/img/display-shiny-elegant-gold-chain.jpg",
     href: "/productos/collar-sunset-layers",
   },
@@ -26,7 +29,8 @@ const TRENDING = [
     name: "Anillo Coral Glow",
     category: "Anillos",
     price: 61500,
-    badge: "✨ Nuevo",
+    badge: "Nuevo",
+    BadgeIcon: Sparkles,
     image: "/img/expensive-golden-ring-displayed-white-coral-background.jpg",
     href: "/productos/anillo-coral-glow",
   },
@@ -35,7 +39,8 @@ const TRENDING = [
     name: "Pulsera Coastline",
     category: "Pulseras",
     price: 42700,
-    badge: "💎 Premium",
+    badge: "Premium",
+    BadgeIcon: Diamond,
     image: "/img/vista-arriba-cadenas-oro-naturaleza-muerta_23-2149560671.avif",
     href: "/productos/pulsera-coastline",
   },
@@ -61,7 +66,10 @@ export default function TrendingSection() {
         </div>
 
         <div className="row g-4">
-          {TRENDING.map((item) => (
+          {TRENDING.map((item) => {
+            const BadgeIcon = item.BadgeIcon;
+
+            return (
             <div className="col-12 col-sm-6 col-lg-3" key={item.id}>
               <article
                 style={{
@@ -93,6 +101,9 @@ export default function TrendingSection() {
                       position: "absolute",
                       top: "0.75rem",
                       left: "0.75rem",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.35rem",
                       background: "var(--surface-strong)",
                       borderRadius: "var(--radius-sm)",
                       padding: "0.2rem 0.65rem",
@@ -101,6 +112,7 @@ export default function TrendingSection() {
                       color: "var(--wine)",
                     }}
                   >
+                    <BadgeIcon size={14} />
                     {item.badge}
                   </span>
                 </div>
@@ -151,7 +163,8 @@ export default function TrendingSection() {
                 </div>
               </article>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

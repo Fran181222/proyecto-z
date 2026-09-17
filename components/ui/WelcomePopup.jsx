@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Gift, PartyPopper, Sparkles, X } from "lucide-react";
 
 export default function WelcomePopup() {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,6 +13,7 @@ export default function WelcomePopup() {
       const timer = setTimeout(() => setIsVisible(true), 1800);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, []);
 
   const handleClose = () => {
@@ -30,44 +32,23 @@ export default function WelcomePopup() {
 
   return (
     <>
-      <div
-        style={{
-          position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)",
-          zIndex: 9998, backdropFilter: "blur(4px)",
-        }}
-        onClick={handleClose}
-      />
-      <div
-        style={{
-          position: "fixed", top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          zIndex: 9999, width: "min(480px, 92vw)",
-          background: "var(--surface-strong)",
-          borderRadius: "var(--radius-lg)",
-          padding: "2.5rem",
-          boxShadow: "var(--shadow)",
-        }}
-      >
-        <button
-          onClick={handleClose}
-          style={{
-            position: "absolute", top: "1rem", right: "1rem",
-            background: "none", border: "none", cursor: "pointer",
-            fontSize: "1.25rem", opacity: 0.5,
-          }}
-          aria-label="Cerrar"
-        >
-          ✕
+      <div className="welcome-backdrop" onClick={handleClose} />
+      <div className="welcome-popup">
+        <button className="welcome-close" onClick={handleClose} aria-label="Cerrar">
+          <X size={18} />
         </button>
 
         {!submitted ? (
           <>
-            <p className="mini-label mb-2">Bienvenida a Malibu ✨</p>
+            <p className="mini-label mb-2">
+              <Sparkles size={16} />
+              Bienvenida a Malibu
+            </p>
             <h3 className="mb-2" style={{ fontFamily: "Cormorant Garamond, serif" }}>
               10% OFF en tu primera compra
             </h3>
             <p className="text-secondary mb-4">
-              Registrá tu email y recibí tu código de descuento exclusivo al instante.
+              Registra tu email y recibi tu codigo de descuento exclusivo al instante.
             </p>
             <form onSubmit={handleSubmit} className="d-grid gap-3">
               <input
@@ -79,25 +60,18 @@ export default function WelcomePopup() {
                 required
               />
               <button className="btn-mali btn-gold w-100" type="submit">
-                <i className="bi bi-gift me-2"></i>Quiero mi descuento
+                <Gift size={18} />Quiero mi descuento
               </button>
-              <button
-                type="button"
-                onClick={handleClose}
-                style={{
-                  background: "none", border: "none",
-                  cursor: "pointer", opacity: 0.5, fontSize: "0.85rem",
-                }}
-              >
+              <button className="welcome-skip" type="button" onClick={handleClose}>
                 No gracias, continuar sin descuento
               </button>
             </form>
           </>
         ) : (
           <div className="text-center py-3">
-            <p style={{ fontSize: "2.5rem" }}>🎉</p>
-            <h4>¡Listo! Revisá tu correo.</h4>
-            <p className="text-secondary">Tu código de descuento está en camino.</p>
+            <PartyPopper className="welcome-success-icon mb-3" size={42} />
+            <h4>Listo, revisa tu correo.</h4>
+            <p className="text-secondary">Tu codigo de descuento esta en camino.</p>
           </div>
         )}
       </div>

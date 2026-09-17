@@ -66,6 +66,8 @@ export default function HeroGrid() {
             <img
               src="/img/imagen-titulo.png"
               alt="Oferta destacada"
+              fetchPriority="high"
+              decoding="async"
             />
             <div className="hero-offer-content">
               <div className="offer-badge">Oferta Malibu</div>
@@ -128,7 +130,7 @@ export default function HeroGrid() {
                   </Link>
                 </div>
                 <div className="seller-card-visual">
-                  <img src={seller.image} alt={seller.name} />
+                  <img src={seller.image} alt={seller.name} loading="lazy" decoding="async" />
                 </div>
               </div>
 

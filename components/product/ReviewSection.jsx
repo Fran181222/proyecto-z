@@ -1,14 +1,17 @@
 "use client";
 import { useState } from "react";
+import { CircleCheck, Send, Star } from "lucide-react";
 
 function StarRating({ rating, interactive = false, onSelect }) {
   const [hovered, setHovered] = useState(0);
+  const activeRating = interactive ? hovered || rating : rating;
+
   return (
     <div style={{ display: "flex", gap: "0.2rem" }}>
       {[1, 2, 3, 4, 5].map((star) => (
         <button
           key={star}
-          type={interactive ? "button" : "button"}
+          type="button"
           onClick={() => interactive && onSelect && onSelect(star)}
           onMouseEnter={() => interactive && setHovered(star)}
           onMouseLeave={() => interactive && setHovered(0)}
@@ -17,16 +20,12 @@ function StarRating({ rating, interactive = false, onSelect }) {
             border: "none",
             cursor: interactive ? "pointer" : "default",
             padding: 0,
-            fontSize: "1.7rem",
-            color:
-              star <= (interactive ? hovered || rating : rating)
-                ? "var(--yellow)"
-                : "var(--muted)",
+            color: star <= activeRating ? "var(--yellow)" : "var(--muted)",
             transition: "color 0.15s ease",
           }}
           aria-label={`${star} estrella${star > 1 ? "s" : ""}`}
         >
-          ★
+          <Star size={24} fill={star <= activeRating ? "currentColor" : "none"} />
         </button>
       ))}
     </div>
@@ -42,17 +41,17 @@ export default function ReviewSection({ initialReviews = [] }) {
             id: 1,
             name: "Laura M.",
             rating: 5,
-            comment: "Hermosos, llegaron perfectos y el packaging es un regalo en sí mismo.",
+            comment: "Hermosos, llegaron perfectos y el packaging es un regalo en si mismo.",
             date: "2025-05-10",
           },
           {
             id: 2,
-            name: "Sofía R.",
+            name: "Sofia R.",
             rating: 4,
-            comment: "Muy buena calidad, los uso todos los días y no pierden brillo.",
+            comment: "Muy buena calidad, los uso todos los dias y no pierden brillo.",
             date: "2025-04-28",
           },
-        ]
+        ],
   );
 
   const [form, setForm] = useState({ name: "", rating: 5, comment: "" });
@@ -79,10 +78,9 @@ export default function ReviewSection({ initialReviews = [] }) {
 
   return (
     <section className="review-section mt-5 pt-5" style={{ borderTop: "1px solid var(--border)" }}>
-      {/* Header con promedio */}
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>
-          <p className="section-tag mb-1">Reseñas del producto</p>
+          <p className="section-tag mb-1">Resenas del producto</p>
           <h3 style={{ fontFamily: "Cormorant Garamond, serif" }}>
             Lo que dicen nuestras clientas
           </h3>
@@ -101,13 +99,12 @@ export default function ReviewSection({ initialReviews = [] }) {
             </div>
             <StarRating rating={Math.round(avgRating)} />
             <div style={{ fontSize: "0.78rem", opacity: 0.6, marginTop: "0.25rem" }}>
-              {reviews.length} reseña{reviews.length !== 1 ? "s" : ""}
+              {reviews.length} resena{reviews.length !== 1 ? "s" : ""}
             </div>
           </div>
         )}
       </div>
 
-      {/* Lista de reseñas */}
       <div className="reviews-list d-flex flex-column gap-3 mb-5">
         {reviews.map((r) => (
           <article
@@ -132,7 +129,6 @@ export default function ReviewSection({ initialReviews = [] }) {
         ))}
       </div>
 
-      {/* Formulario nueva reseña */}
       <div
         style={{
           background: "var(--surface)",
@@ -141,12 +137,12 @@ export default function ReviewSection({ initialReviews = [] }) {
         }}
       >
         <h4 className="mb-4" style={{ fontFamily: "Cormorant Garamond, serif" }}>
-          Dejá tu opinión
+          Deja tu opinion
         </h4>
 
         {submitted && (
           <div
-            className="mb-3"
+            className="review-success-message mb-3"
             style={{
               background: "var(--gold)",
               color: "white",
@@ -155,7 +151,7 @@ export default function ReviewSection({ initialReviews = [] }) {
               fontSize: "0.88rem",
             }}
           >
-            ✓ ¡Gracias por tu reseña! Ya aparece publicada.
+            <CircleCheck size={18} /> Gracias por tu resena! Ya aparece publicada.
           </div>
         )}
 
@@ -165,7 +161,7 @@ export default function ReviewSection({ initialReviews = [] }) {
             <input
               className="form-control"
               type="text"
-              placeholder="¿Cómo te llamás?"
+              placeholder="Como te llamas?"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               required
@@ -173,7 +169,7 @@ export default function ReviewSection({ initialReviews = [] }) {
           </div>
 
           <div className="col-12 col-md-6">
-            <label className="form-label">Puntuación</label>
+            <label className="form-label">Puntuacion</label>
             <div className="mt-1">
               <StarRating
                 rating={form.rating}
@@ -188,7 +184,7 @@ export default function ReviewSection({ initialReviews = [] }) {
             <textarea
               className="form-control"
               rows="3"
-              placeholder="¿Qué te pareció el producto? ¿Lo recomendarías?"
+              placeholder="Que te parecio el producto? Lo recomendarias?"
               value={form.comment}
               onChange={(e) => setForm({ ...form, comment: e.target.value })}
               required
@@ -197,7 +193,7 @@ export default function ReviewSection({ initialReviews = [] }) {
 
           <div className="col-12">
             <button className="btn-mali btn-gold" type="submit">
-              <i className="bi bi-send me-2"></i>Publicar reseña
+              <Send size={18} />Publicar resena
             </button>
           </div>
         </form>

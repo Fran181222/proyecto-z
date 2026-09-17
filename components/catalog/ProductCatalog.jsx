@@ -38,8 +38,8 @@ const FILTER_GROUPS = [
   },
 ];
 
-const INITIAL_OPEN_GROUPS = FILTER_GROUPS.reduce((groups, group) => {
-  groups[group.id] = true;
+const INITIAL_OPEN_GROUPS = FILTER_GROUPS.reduce((groups, group, index) => {
+  groups[group.id] = index === 0;
   return groups;
 }, {});
 
@@ -87,6 +87,13 @@ export default function ProductCatalog({ products }) {
     0,
   );
 
+  const activeBadges = FILTER_GROUPS.flatMap((group) =>
+    activeFilters[group.id].map((optionId) => {
+      const option = group.options.find((item) => item.id === optionId);
+      return option ? { groupId: group.id, optionId, label: option.label } : null;
+    }).filter(Boolean),
+  );
+
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       return FILTER_GROUPS.every((group) => {
@@ -118,9 +125,7 @@ export default function ProductCatalog({ products }) {
 
       return {
         ...current,
-        [groupId]: isActive
-          ? groupFilters.filter((id) => id !== optionId)
-          : [...groupFilters, optionId],
+        [groupId]: isActive ? [] : [optionId],
       };
     });
   };
@@ -151,6 +156,22 @@ export default function ProductCatalog({ products }) {
             className={mobileOpen ? "products-filter-chevron is-open" : "products-filter-chevron"}
           />
         </button>
+
+        {activeBadges.length > 0 && (
+          <div className="products-filter-active-chips" aria-label="Filtros activos">
+            {activeBadges.map((badge) => (
+              <button
+                className="products-filter-chip"
+                key={`${badge.groupId}-${badge.optionId}`}
+                type="button"
+                onClick={() => toggleFilter(badge.groupId, badge.optionId)}
+              >
+                {badge.label}
+                <X size={14} />
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className={mobileOpen ? "products-filter-panel is-open" : "products-filter-panel"}>
           <div className="products-filter-head">

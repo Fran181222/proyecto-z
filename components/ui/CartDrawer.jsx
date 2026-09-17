@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { ArrowRight, ShoppingBag, Trash2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
 export default function CartDrawer() {
@@ -9,15 +10,13 @@ export default function CartDrawer() {
 
   return (
     <>
-      {/* Overlay */}
       <div
-        className="offcanvas-backdrop fade show"
+        className="offcanvas-backdrop fade show cart-door-backdrop"
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Drawer */}
       <div
-        className="offcanvas offcanvas-end cart-offcanvas show"
+        className="offcanvas offcanvas-end cart-offcanvas cart-door-drawer show"
         tabIndex="-1"
         aria-labelledby="cartDrawerLabel"
         style={{ visibility: "visible" }}
@@ -26,7 +25,7 @@ export default function CartDrawer() {
           <div>
             <p className="mini-label mb-1">Carrito Malibu</p>
             <h4 id="cartDrawerLabel" className="mb-0">
-              Tu selección actual
+              Tu seleccion actual
             </h4>
           </div>
           <button
@@ -40,8 +39,8 @@ export default function CartDrawer() {
         <div className="offcanvas-body">
           {items.length === 0 ? (
             <div className="text-center py-5">
-              <i className="fa-solid fa-bag-shopping fs-1 mb-3 d-block" style={{ opacity: 0.3 }}></i>
-              <p className="text-secondary">Tu carrito está vacío.</p>
+              <ShoppingBag className="cart-empty-icon mb-3" size={44} strokeWidth={1.5} />
+              <p className="text-secondary">Tu carrito esta vacio.</p>
               <button
                 className="btn-mali btn-gold mt-2"
                 onClick={() => setIsOpen(false)}
@@ -85,7 +84,7 @@ export default function CartDrawer() {
                           style={{ background: "none", border: "none", cursor: "pointer", opacity: 0.5 }}
                           aria-label="Eliminar"
                         >
-                          <i className="fa-solid fa-trash"></i>
+                          <Trash2 size={17} />
                         </button>
                       </div>
                     </div>
@@ -99,7 +98,7 @@ export default function CartDrawer() {
                   <strong>${total.toLocaleString("es-AR")}</strong>
                 </div>
                 <div className="cart-summary-row">
-                  <span>Envío premium</span>
+                  <span>Envio premium</span>
                   <span>Gratis</span>
                 </div>
                 <div className="cart-summary-row">
@@ -107,7 +106,7 @@ export default function CartDrawer() {
                   <strong>${total.toLocaleString("es-AR")}</strong>
                 </div>
                 <p className="drawer-note mt-3 mb-3">
-                  Podés seguir navegando o ir al detalle completo del carrito.
+                  Podes seguir navegando o ir al detalle completo del carrito.
                 </p>
                 <div className="d-grid gap-3">
                   <Link
@@ -115,7 +114,7 @@ export default function CartDrawer() {
                     href="/carrito"
                     onClick={() => setIsOpen(false)}
                   >
-                    <i className="fa-solid fa-arrow-right"></i>Ir al carrito
+                    <ArrowRight size={18} />Ir al carrito
                   </Link>
                   <button
                     className="btn-mali btn-outline-mali w-100"

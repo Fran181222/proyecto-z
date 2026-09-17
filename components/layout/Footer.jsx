@@ -112,12 +112,6 @@ export default function Footer() {
                 >
                   <i className="bi bi-gift"></i>Gift Cards
                 </Link>
-                <Link
-                  href="/admin"
-                  className="btn-mali btn-outline-mali justify-content-start text-white"
-                >
-                  <i className="bi bi-shield-lock"></i>Panel admin
-                </Link>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
 export default function AuthModal() {
@@ -11,6 +11,17 @@ export default function AuthModal() {
   });
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!isModalOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isModalOpen]);
 
   if (!isModalOpen) return null;
 
@@ -36,9 +47,9 @@ export default function AuthModal() {
 
   return (
     <>
-      <div className="modal-backdrop fade show" onClick={closeModal} />
+      <div className="modal-backdrop fade show auth-backdrop" onClick={closeModal} />
       <div
-        className="modal fade auth-modal show"
+        className="modal fade auth-modal apple-window-modal show"
         style={{ display: "block" }}
         tabIndex="-1"
         aria-modal="true"

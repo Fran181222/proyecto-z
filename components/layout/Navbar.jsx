@@ -1,34 +1,32 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Search, ShoppingBag, User, UserCheck } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const pathname = usePathname();
   const { openModal, user, logout } = useAuth();
-  const { itemCount, setIsOpen, isHydrated } = useCart(); // ← Ahora recibe isHydrated
+  const { itemCount, setIsOpen, isHydrated } = useCart();
 
   const navLinks = [
-    { href: "/productos", label: "Productos", page: "productos" },
-    { href: "/sets", label: "Sets", page: "sets" },
-    { href: "/menu", label: "Menú", page: "menu" },
+    { href: "/productos", label: "Productos" },
+    { href: "/sets", label: "Sets" },
+    { href: "/menu", label: "Menu" },
   ];
 
   return (
     <nav className="navbar navbar-expand-lg site-navbar">
-      <div className="container py-2">
-        {/* Logo */}
+      <div className="container nav-shell py-2">
         <Link className="navbar-brand" href="/">
           <span className="brand-logo" aria-hidden="true">
             <span className="brand-logo-word">MAL</span>
-            {/* <span className="brand-logo-dot"></span> */}
             <span className="brand-logo-word">IBU</span>
           </span>
           <span className="visually-hidden">Malibu</span>
         </Link>
 
-        {/* Toggler mobile */}
         <button
           className="navbar-toggler"
           type="button"
@@ -36,14 +34,13 @@ export default function Navbar() {
           data-bs-target="#mainNavbar"
           aria-controls="mainNavbar"
           aria-expanded="false"
-          aria-label="Abrir menú"
+          aria-label="Abrir menu"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="mainNavbar">
+        <div className="collapse navbar-collapse nav-menu" id="mainNavbar">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
-            {/* Dropdown Colecciones */}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -57,11 +54,11 @@ export default function Navbar() {
                 <div className="row g-4">
                   <div className="col-lg-3">
                     <div className="mega-card">
-                      <div className="col-lg-3 mega-links">
-                      <span className="mini-label">Tendencias</span>
-                      <Link href="/productos?coleccion=italianas">Italianas</Link>
-                      <Link href="/productos?coleccion=accesorios">Charms</Link>
-                      <Link href="/productos?coleccion=materiales">Herramientas</Link>
+                      <div className="mega-links">
+                        <span className="mini-label">Tendencias</span>
+                        <Link href="/productos?coleccion=italianas">Italianas</Link>
+                        <Link href="/productos?coleccion=accesorios">Charms</Link>
+                        <Link href="/productos?coleccion=materiales">Herramientas</Link>
                       </div>
                     </div>
                   </div>
@@ -81,16 +78,15 @@ export default function Navbar() {
                   </div>
                   <div className="col-lg-3">
                     <img
-                      className="rounded-4"
+                      className="mega-menu-image"
                       src="/img/expensive-golden-ring-displayed-white-coral-background.jpg"
-                      alt="Colección Malibu"
+                      alt="Coleccion Malibu"
                     />
                   </div>
                 </div>
               </div>
             </li>
 
-            {/* Links normales */}
             {navLinks.map((link) => (
               <li className="nav-item" key={link.href}>
                 <Link
@@ -108,54 +104,50 @@ export default function Navbar() {
               </a>
             </li>
           </ul>
+        </div>
 
-          {/* Utilidades: usuario + carrito */}
-          <div className="nav-utility">
-            {/* Búsqueda */}
-            <form className="nav-search-shell" aria-label="Buscador">
-              <input
-                className="nav-search-input"
-                type="search"
-                placeholder="Buscar pieza o set"
-                aria-label="Buscar"
-              />
-              <button className="nav-search-submit" type="submit" aria-label="Buscar">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
-
-            {/* Usuario */}
-            {user ? (
-              <button
-                className="btn-mali btn-outline-mali"
-                onClick={logout}
-                aria-label="Cerrar sesión"
-              >
-                <i className="fa-solid fa-user-check"></i>
-              </button>
-            ) : (
-              <button
-                className="btn-mali btn-outline-mali user-access-btn"
-                onClick={() => openModal("login")}
-                aria-label="Abrir acceso de usuario"
-              >
-                <i className="fa-regular fa-user"></i>
-              </button>
-            )}
-
-            {/* Carrito */}
-            <button
-              className="btn-mali btn-outline-mali icon-action-btn"
-              type="button"
-              onClick={() => setIsOpen(true)}
-              aria-label="Abrir carrito"
-            >
-              <i className="fa-solid fa-bag-shopping"></i>
-              {isHydrated && itemCount > 0 && (
-                <span className="cart-count-badge">{itemCount}</span>
-              )}
+        <div className="nav-utility">
+          <form className="nav-search-shell" aria-label="Buscador">
+            <input
+              className="nav-search-input"
+              type="search"
+              placeholder="Buscar pieza o set"
+              aria-label="Buscar"
+            />
+            <button className="nav-search-submit" type="submit" aria-label="Buscar">
+              <Search size={18} />
             </button>
-          </div>
+          </form>
+
+          {user ? (
+            <button
+              className="btn-mali btn-outline-mali user-access-btn"
+              onClick={logout}
+              aria-label="Cerrar sesion"
+            >
+              <UserCheck size={19} />
+            </button>
+          ) : (
+            <button
+              className="btn-mali btn-outline-mali user-access-btn"
+              onClick={() => openModal("login")}
+              aria-label="Abrir acceso de usuario"
+            >
+              <User size={19} />
+            </button>
+          )}
+
+          <button
+            className="btn-mali btn-outline-mali icon-action-btn"
+            type="button"
+            onClick={() => setIsOpen(true)}
+            aria-label="Abrir carrito"
+          >
+            <ShoppingBag size={19} />
+            {isHydrated && itemCount > 0 && (
+              <span className="cart-count-badge">{itemCount}</span>
+            )}
+          </button>
         </div>
       </div>
     </nav>

@@ -13,7 +13,6 @@ export default function Navbar() {
   const navLinks = [
     { href: "/productos", label: "Productos" },
     { href: "/sets", label: "Sets" },
-    { href: "/menu", label: "Menu" },
   ];
 
   return (
@@ -97,12 +96,6 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
-
-            <li className="nav-item">
-              <a className="nav-link" href="#footer-contacto">
-                Contacto
-              </a>
-            </li>
           </ul>
         </div>
 

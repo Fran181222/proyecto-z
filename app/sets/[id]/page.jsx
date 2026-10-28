@@ -1,15 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import SetProductAddButton from "@/components/sets/SetProductAddButton";
-import { getSetById, sets } from "@/data/products";
+import { getSetById, getSets } from "@/data/catalog";
+
+export const revalidate = 60;
 
 export async function generateStaticParams() {
+  const sets = await getSets();
   return sets.map((set) => ({ id: set.id }));
 }
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const set = getSetById(id);
+  const set = await getSetById(id);
 
   return {
     title: set ? `Malibu Joyeria - ${set.title}` : "Malibu Joyeria - Set",
@@ -19,7 +23,7 @@ export async function generateMetadata({ params }) {
 
 export default async function SetDetailPage({ params }) {
   const { id } = await params;
-  const set = getSetById(id);
+  const set = await getSetById(id);
 
   if (!set) {
     notFound();
@@ -34,7 +38,14 @@ export default async function SetDetailPage({ params }) {
             <span>Sets</span>
             <strong>{set.title}</strong>
           </nav>
-          <img src={set.image} alt={set.title} />
+          <Image
+            src={set.imageDetail || set.image}
+            alt={set.title}
+            fill
+            sizes="(max-width: 992px) 100vw, 60vw"
+            preload
+            style={{ objectFit: "cover" }}
+          />
           <div className="set-detail-title">
             <span>{set.products.length} articulos</span>
             <h1>{set.title}</h1>
@@ -49,7 +60,12 @@ export default async function SetDetailPage({ params }) {
             {set.products.map((product) => (
               <article className="set-product-row" key={product.id}>
                 <Link href={`/productos/${product.id}`} className="set-product-image">
-                  <img src={product.images[0].src} alt={product.name} />
+                  <Image
+                    src={product.images[0].src}
+                    alt={product.name}
+                    fill
+                    sizes="140px"
+                  />
                 </Link>
                 <div className="set-product-copy">
                   <strong>${product.price.toLocaleString("es-AR")}</strong>

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ShoppingBag, Trash2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
@@ -53,9 +54,12 @@ export default function CartDrawer() {
               <div className="cart-list">
                 {items.map((item) => (
                   <article className="cart-item" key={item.id}>
-                    <img
+                    <Image
                       src={item.images?.[0]?.src || "/img/display-shiny-elegant-gold-chain.jpg"}
                       alt={item.name}
+                      width={88}
+                      height={88}
+                      sizes="88px"
                     />
                     <div style={{ flex: 1 }}>
                       <h5>{item.name}</h5>

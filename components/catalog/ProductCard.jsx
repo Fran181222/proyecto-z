@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 
 export default function ProductCard({ product }) {
@@ -10,7 +11,12 @@ export default function ProductCard({ product }) {
     <article className="jewel-card">
       <div className="jewel-media">
         <Link href={`/productos/${product.id}`}>
-        <img src={product.images[0].src} alt={product.name} />
+        <Image
+            src={product.images[0].src}
+            alt={product.name}
+            fill
+            sizes="(max-width: 576px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </Link>
         <button
           className="card-cart-btn"

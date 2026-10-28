@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState } from "react";
-import { sets } from "@/data/products";
 
-export default function SetsCarousel() {
+export default function SetsCarousel({ sets }) {
   const [active, setActive] = useState(0);
   const progress = useMemo(
     () => `${((active + 1) / sets.length) * 100}%`,
-    [active]
+    [active, sets.length]
   );
 
   const move = (direction) => {
@@ -47,7 +47,13 @@ export default function SetsCarousel() {
               key={set.id}
               style={{ "--look-offset": active }}
             >
-              <img src={set.image} alt={set.title} />
+              <Image
+                src={set.image}
+                alt={set.title}
+                fill
+                sizes="(max-width: 768px) 80vw, 33vw"
+                style={{ objectFit: "cover" }}
+              />
               <div className="look-card-copy">
                 <span>{set.title}</span>
                 <p>{set.subtitle}</p>

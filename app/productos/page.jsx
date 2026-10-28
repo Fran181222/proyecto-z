@@ -1,12 +1,16 @@
 import ProductCatalog from "@/components/catalog/ProductCatalog";
-import { products } from "@/data/products";
+import { getProducts } from "@/data/catalog";
+
+export const revalidate = 60;
 
 export const metadata = {
   title: "Malibu Joyeria - Productos",
   description: "Catalogo de piezas Malibu Joyeria.",
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts();
+
   return (
     <main className="page-shell">
       <section className="section-space">

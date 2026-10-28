@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function ProductGallery({ images }) {
   const [mainImage, setMainImage] = useState(images[0]);
@@ -17,7 +18,7 @@ export default function ProductGallery({ images }) {
             aria-label={img.alt}
             type="button"
           >
-            <img src={img.src} alt={img.alt} />
+            <Image src={img.src} alt={img.alt} fill sizes="100px" />
             {index === 4 && extraCount > 0 && (
               <span className="detail-thumb-more">+{extraCount}</span>
             )}
@@ -26,7 +27,13 @@ export default function ProductGallery({ images }) {
       </div>
 
       <div className="detail-main-image">
-        <img src={mainImage.src} alt={mainImage.alt} />
+        <Image
+          src={mainImage.src}
+          alt={mainImage.alt}
+          fill
+          sizes="(max-width: 992px) 100vw, 50vw"
+          preload
+        />
         <div className="detail-gallery-dots" aria-hidden="true">
           {images.map((img) => (
             <span

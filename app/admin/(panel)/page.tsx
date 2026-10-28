@@ -1,8 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { createClient, Product, Review, SetRow, UserProfile, WishlistItem } from '../lib/supabase'
-import s from './admin.module.css'
+import { createClient, Product, Review, SetRow, UserProfile, WishlistItem } from '@/app/lib/supabase'
+import ProductForm from '@/components/admin/ProductForm'
+import SetForm from '@/components/admin/SetForm'
+import { logoutAction } from '../login/actions'
+import { setProductActiveAction, setSetActiveAction } from './actions'
+import s from '../admin.module.css'
 
 type Tab = 'overview' | 'products' | 'sets' | 'reviews' | 'wishlist' | 'usuarios'
 type Status = 'pending' | 'ok' | 'error'
@@ -16,7 +20,6 @@ const TABS: [Tab, string][] = [
   ['usuarios', 'Usuarios'],
 ]
 
-const splitList = (value: string) => value.split(',').map((item) => item.trim()).filter(Boolean)
 const formatDate = (date: string) =>
   new Date(date).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })
 const formatPrice = (n: number) =>
@@ -59,72 +62,6 @@ function UserCell({ userId, users }: { userId: string; users: UserProfile[] }) {
 
 function Empty({ children }: { children: string }) {
   return <div className={s.empty}>{children}</div>
-}
-
-function AddProductModal({ onClose, onSaved }: { onClose: () => void; onSaved: () => void }) {
-  const [form, setForm] = useState({ id: '', name: '', category: '', price: '', images: '', filters: '', tags: '' })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  const bind = (key: keyof typeof form) => ({
-    value: form[key],
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-      setForm((prev) => ({ ...prev, [key]: e.target.value })),
-  })
-
-  async function handleSave() {
-    if (!form.id || !form.name || !form.category || !form.price) {
-      setError('ID, nombre, categoría y precio son obligatorios.')
-      return
-    }
-    setLoading(true)
-    setError('')
-    const { error: err } = await createClient().from('products').insert({
-      id: form.id.toLowerCase().replace(/\s+/g, '-'),
-      name: form.name,
-      category: form.category,
-      price: parseFloat(form.price),
-      images: splitList(form.images),
-      filters: splitList(form.filters),
-      tags: splitList(form.tags),
-      price_by_size: {},
-      is_active: true,
-    })
-    setLoading(false)
-    if (err) { setError(err.message); return }
-    onSaved()
-    onClose()
-  }
-
-  return (
-    <div className={s.overlay} onClick={onClose}>
-      <div className={s.modal} onClick={(e) => e.stopPropagation()}>
-        <h2>Nuevo producto</h2>
-        {error && <div className={s.error}>{error}</div>}
-        <div className={s.field}><label>ID (slug único)</label><input placeholder="anillo-oro-001" {...bind('id')} /></div>
-        <div className={s.row}>
-          <div className={s.field}><label>Nombre</label><input placeholder="Anillo Eternidad" {...bind('name')} /></div>
-          <div className={s.field}>
-            <label>Categoría</label>
-            <select {...bind('category')}>
-              <option value="">Elegir...</option>
-              {['anillos', 'collares', 'aros', 'pulseras', 'broches'].map((c) => <option key={c}>{c}</option>)}
-            </select>
-          </div>
-        </div>
-        <div className={s.field}><label>Precio base (ARS)</label><input type="number" placeholder="12500" {...bind('price')} /></div>
-        <div className={s.field}><label>URLs de imágenes (separadas por coma)</label><input placeholder="https://..." {...bind('images')} /></div>
-        <div className={s.field}><label>Filtros (separados por coma)</label><input placeholder="oro, 18k" {...bind('filters')} /></div>
-        <div className={s.field}><label>Tags (separados por coma)</label><input placeholder="nuevo, destacado" {...bind('tags')} /></div>
-        <div className={s.modalFooter}>
-          <button className={`${s.btn} ${s.btnOutline}`} onClick={onClose}>Cancelar</button>
-          <button className={`${s.btn} ${s.btnPrimary}`} onClick={handleSave} disabled={loading}>
-            {loading ? 'Guardando...' : 'Guardar producto'}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
 }
 
 function ReviewsTable({ reviews, users }: { reviews: Review[]; users: UserProfile[] }) {
@@ -224,8 +161,8 @@ function ProductsView({ products, onRefresh, onError }: { products: Product[]; o
     .filter((p) => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query))
 
   async function toggleActive(product: Product) {
-    const { error } = await createClient().from('products').update({ is_active: !product.is_active }).eq('id', product.id)
-    if (error) onError(error.message)
+    const result = await setProductActiveAction(product.id, !product.is_active)
+    if (!result.ok) onError(result.error ?? 'No se pudo actualizar el producto.')
     else onRefresh()
   }
 
@@ -270,23 +207,40 @@ function ProductsView({ products, onRefresh, onError }: { products: Product[]; o
         </div>
       ) : <Empty>No se encontraron productos.</Empty>}
 
-      {showModal && <AddProductModal onClose={() => setShowModal(false)} onSaved={onRefresh} />}
+      {showModal && <ProductForm onClose={() => setShowModal(false)} onSaved={onRefresh} />}
     </>
   )
 }
 
-function SetsView({ sets }: { sets: SetRow[] }) {
-  if (!sets.length) return <Empty>No hay colecciones.</Empty>
+function SetsView({ sets, products, onRefresh, onError }: { sets: SetRow[]; products: Product[]; onRefresh: () => void; onError: (msg: string) => void }) {
+  const [showModal, setShowModal] = useState(false)
+
+  async function toggleActive(set: SetRow) {
+    const result = await setSetActiveAction(set.id, !set.is_active)
+    if (!result.ok) onError(result.error ?? 'No se pudo actualizar el set.')
+    else onRefresh()
+  }
+
   return (
+    <>
+      <div className={s.toolbar} style={{ justifyContent: 'flex-end' }}>
+        <button className={`${s.btn} ${s.btnPrimary}`} onClick={() => setShowModal(true)}>+ Nuevo set</button>
+      </div>
+      {sets.length ? (
     <div className={s.list}>
       {sets.map((set) => (
         <div key={set.id} className={s.card}>
           <div className={s.setHead}>
             {set.image && <img src={set.image} alt={set.title} className={s.setImg} onError={(e) => { e.currentTarget.style.visibility = 'hidden' }} />}
-            <div>
+            {set.image_detail && <img src={set.image_detail} alt={`${set.title} detalle`} className={s.setImg} onError={(e) => { e.currentTarget.style.visibility = 'hidden' }} />}
+            <div style={{ flex: 1 }}>
               <h3 className={s.setTitle}>{set.title}</h3>
               <div className={`${s.dim} ${s.small}`}>{set.subtitle ? `${set.subtitle} · ` : ''}<span className={s.mono}>{set.id}</span></div>
             </div>
+            <span className={`${s.badge} ${set.is_active ? s.badgeOk : s.badgeOff}`}>{set.is_active ? 'Activo' : 'Inactivo'}</span>
+            <button className={`${s.btn} ${s.btnSm} ${set.is_active ? s.btnDanger : s.btnOutline}`} onClick={() => toggleActive(set)}>
+              {set.is_active ? 'Desactivar' : 'Activar'}
+            </button>
           </div>
           <div className={s.chips}>
             {[...set.set_products].sort((a, b) => a.position - b.position).map(({ products: p }) => (
@@ -302,6 +256,9 @@ function SetsView({ sets }: { sets: SetRow[] }) {
         </div>
       ))}
     </div>
+      ) : <Empty>No hay colecciones.</Empty>}
+      {showModal && <SetForm products={products} onClose={() => setShowModal(false)} onSaved={onRefresh} />}
+    </>
   )
 }
 
@@ -413,6 +370,9 @@ export default function AdminPanel() {
             <span className={`${s.dot} ${status === 'ok' ? s.dotOk : status === 'error' ? s.dotErr : ''}`} />
             {status === 'ok' ? 'Conectado' : status === 'error' ? 'Sin conexión' : 'Conectando…'}
             <button className={`${s.btn} ${s.btnOutline} ${s.btnSm}`} onClick={fetchAll}>Recargar</button>
+            <form action={logoutAction}>
+              <button className={`${s.btn} ${s.btnOutline} ${s.btnSm}`} type="submit">Cerrar sesión</button>
+            </form>
           </div>
         </div>
 
@@ -437,7 +397,7 @@ export default function AdminPanel() {
           <>
             {tab === 'overview' && <Overview products={products} sets={sets} reviews={reviews} users={users} />}
             {tab === 'products' && <ProductsView products={products} onRefresh={fetchAll} onError={setError} />}
-            {tab === 'sets' && <SetsView sets={sets} />}
+            {tab === 'sets' && <SetsView sets={sets} products={products} onRefresh={fetchAll} onError={setError} />}
             {tab === 'reviews' && (reviews.length ? <ReviewsTable reviews={reviews} users={users} /> : <Empty>No hay reseñas aún.</Empty>)}
             {tab === 'wishlist' && <WishlistView wishlist={wishlist} users={users} />}
             {tab === 'usuarios' && <UsuariosView users={users} />}

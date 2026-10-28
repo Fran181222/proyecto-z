@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { Diamond, Flame, Sparkles, Star } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
@@ -91,10 +92,12 @@ export default function TrendingSection() {
               >
                 {/* Imagen */}
                 <div style={{ position: "relative", aspectRatio: "1/1", overflow: "hidden" }}>
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    fill
+                    sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 25vw"
+                    style={{ objectFit: "cover" }}
                   />
                   <span
                     style={{
@@ -122,7 +125,7 @@ export default function TrendingSection() {
                   <span className="mini-label mb-2">{item.category}</span>
                   <h4
                     style={{
-                      fontFamily: "Cormorant Garamond, serif",
+                      fontFamily: "var(--font-cormorant), serif",
                       fontSize: "1.2rem",
                       marginBottom: "0.5rem",
                     }}

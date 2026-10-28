@@ -3,15 +3,18 @@ import ProductGallery from "@/components/product/ProductGallery";
 import ProductPurchaseActions from "@/components/product/ProductPurchaseActions";
 import RelatedProducts from "@/components/product/RelatedProducts";
 import ReviewSection from "@/components/product/ReviewSection";
-import { getProductById, getRelatedProducts, products } from "@/data/products";
+import { getProductById, getProducts, getRelatedProducts } from "@/data/catalog";
+
+export const revalidate = 60;
 
 export async function generateStaticParams() {
+  const products = await getProducts();
   return products.map((product) => ({ id: product.id }));
 }
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductById(id);
 
   return {
     title: product
@@ -23,13 +26,13 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductById(id);
 
   if (!product) {
     notFound();
   }
 
-  const relatedProducts = getRelatedProducts(product);
+  const relatedProducts = await getRelatedProducts(product);
   const displayPrice = product.pricesBySize
     ? Object.values(product.pricesBySize)[1] || product.price
     : product.price;

@@ -56,8 +56,9 @@ function getSearchableProductText(product) {
     product.category,
     product.collection,
     product.subcollection,
-    product.filters?.color,
-    product.filters?.categoria,
+    ...(Array.isArray(product.filters)
+      ? product.filters
+      : [product.filters?.color, product.filters?.categoria]),
     ...(product.tags || []),
   ].join(" "));
 }

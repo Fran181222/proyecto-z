@@ -16,6 +16,11 @@ export type Product = {
   images: string[]
   filters: string[]
   tags: string[]
+  description: string
+  stock: number
+  collection: string
+  subcollection: string | null
+  plan: string | null
   is_active: boolean
   created_at: string
 }
@@ -50,6 +55,9 @@ export type SetRow = {
   title: string
   subtitle: string | null
   image: string | null
+  image_detail: string | null
+  accent: string
+  is_active: boolean
   created_at: string
   set_products: { position: number; products: Product }[]
 }

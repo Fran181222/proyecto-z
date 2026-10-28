@@ -81,7 +81,7 @@ export default function ReviewSection({ initialReviews = [] }) {
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>
           <p className="section-tag mb-1">Resenas del producto</p>
-          <h3 style={{ fontFamily: "Cormorant Garamond, serif" }}>
+          <h3 style={{ fontFamily: "var(--font-cormorant), serif" }}>
             Lo que dicen nuestras clientas
           </h3>
         </div>
@@ -136,7 +136,7 @@ export default function ReviewSection({ initialReviews = [] }) {
           padding: "2rem",
         }}
       >
-        <h4 className="mb-4" style={{ fontFamily: "Cormorant Garamond, serif" }}>
+        <h4 className="mb-4" style={{ fontFamily: "var(--font-cormorant), serif" }}>
           Deja tu opinion
         </h4>
 

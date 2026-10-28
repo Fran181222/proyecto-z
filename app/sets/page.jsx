@@ -1,13 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Layers } from "lucide-react";
-import { products, sets } from "@/data/products";
+import { getProducts, getSets } from "@/data/catalog";
+import { thumbUrl } from "@/data/image-url";
+
+export const revalidate = 60;
 
 export const metadata = {
   title: "Malibu Joyeria - Sets",
   description: "Colecciones y sets de Malibu Joyeria.",
 };
 
-function getSetImages(set) {
+function getSetImages(set, products) {
   const productImages = set.productIds
     .map((productId) => products.find((product) => product.id === productId)?.images?.[0]?.src)
     .filter(Boolean);
@@ -15,7 +19,9 @@ function getSetImages(set) {
   return [set.image, ...productImages].slice(0, 4);
 }
 
-export default function SetsPage() {
+export default async function SetsPage() {
+  const [sets, products] = await Promise.all([getSets(), getProducts()]);
+
   return (
     <main className="page-shell">
       <section className="sets-page-showcase section-space">
@@ -34,7 +40,7 @@ export default function SetsPage() {
 
           <div className="sets-collection-grid mt-4">
             {sets.map((set) => {
-              const images = getSetImages(set);
+              const images = getSetImages(set, products);
 
               return (
                 <Link
@@ -44,12 +50,12 @@ export default function SetsPage() {
                 >
                   <div className="sets-preview-media">
                     {images.map((image, index) => (
-                      <img
+                      <Image
                         key={`${set.id}-${image}`}
                         src={image}
                         alt={`${set.title} vista ${index + 1}`}
-                        loading={index === 0 ? "eager" : "lazy"}
-                        decoding="async"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         style={{ "--preview-index": index }}
                       />
                     ))}
@@ -66,7 +72,7 @@ export default function SetsPage() {
                         <span
                           key={`${set.id}-thumb-${image}`}
                           style={{
-                            backgroundImage: `url(${image})`,
+                            backgroundImage: `url(${thumbUrl(image)})`,
                             "--preview-index": index,
                           }}
                         />

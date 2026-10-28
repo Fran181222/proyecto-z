@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-import { products } from "@/data/products";
 
-export default function JewelCards() {
+export default function JewelCards({ products }) {
   const { addItem } = useCart();
-  const featured = products.slice(0, 4);
 
   return (
     <section className="pb-5">
@@ -22,11 +21,16 @@ export default function JewelCards() {
         </div>
 
         <div className="row g-4">
-          {featured.map((product) => (
+          {products.map((product) => (
             <div className="col-12 col-md-6 col-xl-3" key={product.id}>
               <article className="jewel-card">
                 <div className="jewel-media">
-                  <img src={product.images[0].src} alt={product.name} />
+                  <Image
+                    src={product.images[0].src}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  />
                   <button
                     onClick={() => addItem(product)}
                     aria-label={`Agregar ${product.name} al carrito`}

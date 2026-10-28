@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 const ROTATING_WORDS = ["brillo costero", "oro artesanal", "piezas icónicas", "elegancia diaria"];
@@ -34,21 +35,44 @@ const BEST_SELLERS = [
   },
 ];
 
-export default function HeroGrid() {
+/**
+ * La palabra rotativa vive en su propio componente: así el cambio de estado cada 2,2 s
+ * re-renderiza solo este <strong> y no todo el hero (imágenes, carrusel, métricas).
+ */
+function RotatingWord() {
   const [wordIndex, setWordIndex] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [sellerIndex, setSellerIndex] = useState(0);
 
   useEffect(() => {
+    let swapTimer;
     const interval = setInterval(() => {
       setVisible(false);
-      setTimeout(() => {
+      swapTimer = setTimeout(() => {
         setWordIndex((i) => (i + 1) % ROTATING_WORDS.length);
         setVisible(true);
       }, 200);
     }, 2200);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(swapTimer);
+    };
   }, []);
+
+  return (
+    <strong
+      className="rotating-text"
+      style={{
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.2s ease",
+      }}
+    >
+      {ROTATING_WORDS[wordIndex]}
+    </strong>
+  );
+}
+
+export default function HeroGrid() {
+  const [sellerIndex, setSellerIndex] = useState(0);
 
   const prevSeller = () =>
     setSellerIndex((i) => (i - 1 + BEST_SELLERS.length) % BEST_SELLERS.length);
@@ -63,11 +87,13 @@ export default function HeroGrid() {
         <div className="hero-grid">
           {/* Panel izquierdo — Oferta */}
           <article className="hero-panel hero-offer">
-            <img
+            <Image
               src="/img/imagen-titulo.png"
               alt="Oferta destacada"
-              fetchPriority="high"
-              decoding="async"
+              fill
+              sizes="(max-width: 992px) 100vw, 55vw"
+              preload
+              style={{ objectFit: "cover" }}
             />
             <div className="hero-offer-content">
               <div className="offer-badge">Oferta Malibu</div>
@@ -105,15 +131,7 @@ export default function HeroGrid() {
                 </p>
                 <div className="rotating-wrapper">
                   <span></span>
-                  <strong
-                    className="rotating-text"
-                    style={{
-                      opacity: visible ? 1 : 0,
-                      transition: "opacity 0.2s ease",
-                    }}
-                  >
-                    {ROTATING_WORDS[wordIndex]}
-                  </strong>
+                  <RotatingWord />
                 </div>
                 <h2>El carrusel favorito de quienes eligen Malibu.</h2>
               </div>
@@ -130,7 +148,13 @@ export default function HeroGrid() {
                   </Link>
                 </div>
                 <div className="seller-card-visual">
-                  <img src={seller.image} alt={seller.name} loading="lazy" decoding="async" />
+                  <Image
+                    src={seller.image}
+                    alt={seller.name}
+                    fill
+                    sizes="240px"
+                    style={{ objectFit: "cover" }}
+                  />
                 </div>
               </div>
 

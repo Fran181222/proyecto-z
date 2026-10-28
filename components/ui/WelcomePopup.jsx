@@ -44,7 +44,7 @@ export default function WelcomePopup() {
               <Sparkles size={16} />
               Bienvenida a Malibu
             </p>
-            <h3 className="mb-2" style={{ fontFamily: "Cormorant Garamond, serif" }}>
+            <h3 className="mb-2" style={{ fontFamily: "var(--font-cormorant), serif" }}>
               10% OFF en tu primera compra
             </h3>
             <p className="text-secondary mb-4">

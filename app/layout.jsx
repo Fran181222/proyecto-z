@@ -1,8 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/app/globals.css";
+import { Cormorant_Garamond, Poppins, Ribeye } from "next/font/google";
 import BootstrapClient from "@/components/BootstrapClient";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
+import HideOnAdmin from "@/components/layout/HideOnAdmin";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Topbar from "@/components/layout/Topbar";
@@ -11,6 +14,27 @@ import AuthModal from "@/components/ui/AuthModal";
 import WelcomePopup from "@/components/ui/WelcomePopup";
 import FloatingContactButton from "@/components/ui/FloatingContactButton";
 
+// next/font descarga las fuentes en el build y las sirve desde nuestro propio dominio:
+// sin pedidos a Google ni CSS bloqueante.
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-poppins",
+});
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+  variable: "--font-cormorant",
+});
+const ribeye = Ribeye({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-ribeye",
+});
+
 export const metadata = {
   title: "Malibu Joyería",
   description: "Piezas pensadas para brillar con personalidad.",
@@ -18,30 +42,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        />
-      </head>
+    <html lang="es" className={`${poppins.variable} ${cormorant.variable} ${ribeye.variable}`}>
       <body>
         <AuthProvider>
           <CartProvider>
-            <WelcomePopup />
-            <Topbar />
-            <Navbar />
+            <HideOnAdmin>
+              <WelcomePopup />
+              <Topbar />
+              <Navbar />
+            </HideOnAdmin>
             {children}
-            <Footer />
-            <FloatingContactButton />
-            <CartDrawer />
-            <AuthModal />
+            <HideOnAdmin>
+              <Footer />
+              <FloatingContactButton />
+              <CartDrawer />
+              <AuthModal />
+            </HideOnAdmin>
           </CartProvider>
         </AuthProvider>
 

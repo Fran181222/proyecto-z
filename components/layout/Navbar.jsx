@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Search, ShoppingBag, User, UserCheck } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -76,10 +77,13 @@ export default function Navbar() {
                     <Link href="/gift-card">Gift Cards</Link>
                   </div>
                   <div className="col-lg-3">
-                    <img
+                    <Image
                       className="mega-menu-image"
                       src="/img/expensive-golden-ring-displayed-white-coral-background.jpg"
                       alt="Coleccion Malibu"
+                      width={480}
+                      height={320}
+                      sizes="280px"
                     />
                   </div>
                 </div>
